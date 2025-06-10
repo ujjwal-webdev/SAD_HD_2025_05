@@ -1,18 +1,16 @@
 package SOLID;
 
 public class ISP_02 {
-    
-    /*
-     * TASK:
-     * Again, some classes are more simple than other.
-     * Fix this without violating the ISP (Interface Segregation Principle)!
-     */
-    public static interface Worker {
+
+    public interface Workable {
         void work();
-        void rest();        
     }
 
-    public static class Developer implements Worker {
+    public interface Restable {
+        void rest();
+    }
+
+    public static class Developer implements Workable, Restable {
         @Override
         public void work() {
             System.out.println("Developer is coding ...");
@@ -24,25 +22,28 @@ public class ISP_02 {
         }
     }
 
-    public static class Robot implements Worker {
+    public static class Robot implements Workable {
         @Override
         public void work() {
             System.out.println("Robot is working hard ...");
         }
-
-        @Override
-        public void rest() {
-            throw new UnsupportedOperationException("Robot does not need a break!");
-        }        
     }
 
-    public static void workingCycle(Worker worker) {
+    public static void workingCycle(Workable worker) {
         worker.work();
-        worker.rest();
+    }
+
+    public static void restingCycle(Restable restable) {
+        restable.rest();
     }
 
     public static void main(String[] args) {
-        workingCycle( new Developer() );
-        workingCycle( new Robot() );        
+        Developer dev = new Developer();
+        Robot robo = new Robot();
+
+        workingCycle(dev);
+        restingCycle(dev);
+
+        workingCycle(robo);
     }
 }

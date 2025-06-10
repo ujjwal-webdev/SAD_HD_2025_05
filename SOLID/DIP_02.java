@@ -2,12 +2,6 @@ package SOLID;
 
 public class DIP_02 {
 
-    /*
-     * TASK:
-     * The class Employee violates the DIP (Dependency Inversion Principle).
-     * Fix this!
-     */
-    
     public static interface Notification {
         void doNotify();
     }
@@ -20,21 +14,20 @@ public class DIP_02 {
     }
 
     public static class Employee {
-        private EmailNotification emailNotification;
+        private Notification notification;
 
-        // Dependency Injection (again) composition
-        public Employee(EmailNotification emailNotification) {
-            this.emailNotification = emailNotification;
+        public Employee(Notification notification) {
+            this.notification = notification;
         }
     
         public void notifyEmployee() {
-            emailNotification.doNotify();
+            notification.doNotify();
         }
     }
 
     public static void main(String[] args) {
-        EmailNotification emailNotification = new EmailNotification();
-        Employee employee = new Employee(emailNotification);
+        Notification notification = new EmailNotification();
+        Employee employee = new Employee(notification);
         employee.notifyEmployee();
     }
 }
